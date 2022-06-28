@@ -3,7 +3,7 @@ import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
 import { userRows } from "../../dummyData";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function UserList() {
   const [data, setData] = useState(userRows);
@@ -11,6 +11,24 @@ export default function UserList() {
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id));
   };
+
+  const serverLink = "http://localhost:5000/members";
+
+  const [dat, setDat] = useState([])
+
+  useEffect(() => {
+
+    fetch(serverLink).then(res => res.json()).then(data => {
+      console.log(data);
+      setDat(data);
+    })
+
+    
+  
+    return () => {
+      
+    }
+  }, [])
   
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
