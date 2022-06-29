@@ -6,10 +6,70 @@ import {
   PhoneAndroid,
   Publish,
 } from "@material-ui/icons";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./user.css";
 
 export default function User() {
+
+  const [user, setUser] = useState({})
+
+  const [firstName, setFirstName] = useState(user.firstName)
+  const [lastName, setLastName] = useState(user.lastName)
+  const [email, setEmail] = useState(user.email)
+  const [phone, setPhone] = useState(user.phone)
+  const [id, setId] = useState(user.id)
+
+  useEffect(() => {
+    const id = window.location.pathname.replace("/user/", "");
+    //https://arcane-anchorage-41306.herokuapp.com/members/${id}
+
+    fetch(`http://localhost:5000/members/${id}`)
+    .then(res => res.json())
+    .then(data => setUser(data))
+    .catch(err => console.log(err))
+  
+    return () => {
+      
+    }
+  }, [])
+
+  useEffect(() => {
+
+    setId(user.id);
+    setFirstName(user.firstName);
+    setLastName(user.lastName);
+    setEmail(user.email);
+    setPhone(user.phone);
+
+    return () => {
+      
+    }
+  }, [user])
+
+  function updateUser(e){
+    e.preventDefault();
+    let data = {
+      id,
+      firstName,
+      lastName,
+      email,
+      phone
+    }
+
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }
+    fetch(`http://localhost:5000/members/${user.id}`, options)
+    .then(res => res.json())
+    .then(data=> setUser(data))
+    .catch(err => console.log(err))
+  }
+  
   
   return (
     <div className="user">
@@ -28,15 +88,15 @@ export default function User() {
               className="userShowImg"
             />
             <div className="userShowTopTitle">
-              <span className="userShowUsername">Anna Becker</span>
-              <span className="userShowUserTitle">Software Engineer</span>
+              <span className="userShowUsername">{user.firstName} {user.lastName}</span>
+              <span className="userShowUserTitle">{user.church}</span>
             </div>
           </div>
           <div className="userShowBottom">
             <span className="userShowTitle">Account Details</span>
             <div className="userShowInfo">
               <PermIdentity className="userShowIcon" />
-              <span className="userShowInfoTitle">annabeck99</span>
+              <span className="userShowInfoTitle">{user.firstName} {user.lastName}</span>
             </div>
             <div className="userShowInfo">
               <CalendarToday className="userShowIcon" />
@@ -45,11 +105,11 @@ export default function User() {
             <span className="userShowTitle">Contact Details</span>
             <div className="userShowInfo">
               <PhoneAndroid className="userShowIcon" />
-              <span className="userShowInfoTitle">+1 123 456 67</span>
+              <span className="userShowInfoTitle">{user.phone}</span>
             </div>
             <div className="userShowInfo">
               <MailOutline className="userShowIcon" />
-              <span className="userShowInfoTitle">annabeck99@gmail.com</span>
+              <span className="userShowInfoTitle">{user.email}</span>
             </div>
             <div className="userShowInfo">
               <LocationSearching className="userShowIcon" />
@@ -62,26 +122,36 @@ export default function User() {
           <form className="userUpdateForm">
             <div className="userUpdateLeft">
               <div className="userUpdateItem">
-                <label>Username</label>
+                <label>First Name</label>
                 <input
                   type="text"
-                  placeholder="annabeck99"
+                  placeholder={user.firstName}
+                  className="userUpdateInput"
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
+              </div>
+              <div className="userUpdateItem">
+                <label>Last Name</label>
+                <input
+                  type="text"
+                  placeholder={user.lastName}
                   className="userUpdateInput"
                 />
               </div>
               <div className="userUpdateItem">
-                <label>Full Name</label>
+                <label>Id</label>
                 <input
                   type="text"
-                  placeholder="Anna Becker"
+                  placeholder={user.id}
                   className="userUpdateInput"
+                  onChange={(e) => setId(e.target.value)}
                 />
               </div>
               <div className="userUpdateItem">
                 <label>Email</label>
                 <input
                   type="text"
-                  placeholder="annabeck99@gmail.com"
+                  placeholder={user.email}
                   className="userUpdateInput"
                 />
               </div>
@@ -89,8 +159,9 @@ export default function User() {
                 <label>Phone</label>
                 <input
                   type="text"
-                  placeholder="+1 123 456 67"
+                  placeholder={user.phone}
                   className="userUpdateInput"
+                  onChange={(e) => setPhone(e.target.value)}
                 />
               </div>
               <div className="userUpdateItem">
@@ -114,7 +185,7 @@ export default function User() {
                 </label>
                 <input type="file" id="file" style={{ display: "none" }} />
               </div>
-              <button className="userUpdateButton">Update</button>
+              <button className="userUpdateButton" onClick={(e) => updateUser(e)} >Update</button>
             </div>
           </form>
         </div>
