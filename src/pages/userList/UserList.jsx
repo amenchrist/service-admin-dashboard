@@ -19,7 +19,7 @@ export default function UserList() {
   useEffect(() => {
 
     fetch(serverLink).then(res => res.json()).then(data => {
-      console.log(data);
+      //console.log(data);
       setDat(data);
     })
   
@@ -103,6 +103,7 @@ export default function UserList() {
 
   return (
     <div className="userList">
+      <h3 style={{"margin-bottom":"20px", paddingLeft: "10px"}}>All Members</h3>
       <DataGrid
         rows={data}
         disableSelectionOnClick

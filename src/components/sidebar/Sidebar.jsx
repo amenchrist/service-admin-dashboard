@@ -12,11 +12,87 @@ import {
   Report,
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useStateContext } from '../../contexts/ContextProvider';
 
 export default function Sidebar() {
+
+
+  const { setAttendanceRecords } = useStateContext();
+
+  const [dates, setDates] = useState([])
+  const [serviceDate, setServiceDate] = useState('');
+
+  //Get 
+
+  useEffect(()=> {
+    const controller = new AbortController();
+    const signal = controller.signal;
+    const options = {
+      signal: signal
+    }
+    const datesUrl = "http://localhost:5000/attendees/";
+
+    fetch(datesUrl, options).then(res => res.json()).then(res => {
+      // let serviceDates = []
+      // res.forEach(rec => {
+      //   if(!serviceDates.includes(rec.date)){
+      //     serviceDates.push(rec.date)
+      //   }
+      // })
+      setDates(res)
+      setServiceDate(res[0])
+      //console.log(dates)
+      // res.forEach(record => )
+      return () => {
+        //cancel the request before the compnent unmounts
+        controller.abort();
+      }
+
+    })
+  }, [])
+
+  useEffect(()=>{
+    const controller = new AbortController();
+    const signal = controller.signal;
+    const options = {
+      signal: signal
+    }
+    const attendanceUrl = `http://localhost:5000/attendees/${serviceDate}`;
+
+    if(serviceDate !== ""){
+      fetch(attendanceUrl, options).then(res => res.json()).then(res => {
+        console.log(res);
+        setAttendanceRecords(res);
+      });
+      
+    }
+
+
+    return () => {
+      //cancel the request before the compnent unmounts
+      controller.abort();
+    }
+  }, [serviceDate ])
+
+  let services = [
+    "Midweek Service - Wednesday, 29th June 2022",
+    "Sunday Service - Sunday, 26th June 2022",
+    "Midweek Service - Wednesday, 23rd June 2022",
+    "Sunday Service - Sunday, 19th June 2022"
+  ]
+
+  services = dates;
+  //console.log(services)
+
   return (
     <div className="sidebar">
+      <div className="service-title">
+      </div>
       <div className="sidebarWrapper">
+        <select name="select" className="service-selector" onChange={(e) => setServiceDate(e.target.value)}>
+          {services.map( (service, i) => <option value={service} key={i} >{service}</option> )}
+        </select>
         <div className="sidebarMenu">
           <h3 className="sidebarTitle">Dashboard</h3>
           <ul className="sidebarList">

@@ -49,6 +49,7 @@ export default function AbsenteesList() {
     
       return (
         <div className="userList">
+          <h3 style={{"margin-bottom":"20px", paddingLeft: "10px"}}>Absentees</h3>
           <DataGrid
             rows={userRows}
             disableSelectionOnClick

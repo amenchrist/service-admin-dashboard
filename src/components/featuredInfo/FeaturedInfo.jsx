@@ -1,15 +1,19 @@
 import "./featuredInfo.css";
 import { ArrowDownward, ArrowUpward } from "@material-ui/icons";
 import { Link } from "react-router-dom";
+import { useStateContext } from "../../contexts/ContextProvider";
 
 export default function FeaturedInfo() {
+
+  const { attendanceRecords } = useStateContext();
+
   return (
     <div className="featured">
       <div className="featuredItem">
         <Link to="/attendees" className="link">
-          <span className="featuredTitle">Today's Attendance</span>
+          <span className="featuredTitle">Total Attendance</span>
           <div className="featuredMoneyContainer">
-            <span className="featuredMoney">2,415</span>
+            <span className="featuredMoney">{attendanceRecords.length}</span>
             <span className="featuredMoneyRate">
               -11.4 <ArrowDownward  className="featuredIcon negative"/>
             </span>

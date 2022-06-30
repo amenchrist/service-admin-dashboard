@@ -4,35 +4,18 @@ import { DeleteOutline } from "@material-ui/icons";
 import { userRows } from "../../dummyData";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useStateContext } from '../../contexts/ContextProvider';
 
 export default function AttendeesList() {
 
-  const [data, setData] = useState(userRows);
+  const { attendanceRecords } = useStateContext();
+  const [data, setData] = useState(attendanceRecords);
+  console.log(attendanceRecords)
 
-  const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
-  };
-
-  const serverLink = "http://localhost:5000/attendees/"//"https://arcane-anchorage-41306.herokuapp.com/attendees"//
-
-  const [dat, setDat] = useState([]);
-
-  useEffect(() => {
-
-    fetch(serverLink).then(res => res.json()).then(data => {
-      console.log(data);
-      setDat(data);
-    })
-  
-    return () => {
-      
-    }
-  }, []);
-
-  useEffect(() => {
+  useEffect(()=>{
     const newData = []
-    dat.forEach(m => {
-       m = {
+    attendanceRecords.forEach(m => {
+        m = {
         id: m.id,
         attendees: m.attendees,
         date: m.date,
@@ -49,11 +32,9 @@ export default function AttendeesList() {
     })
 
     setData(newData);
+  }, [attendanceRecords])
 
-    return () => {
-      
-    }
-  }, [dat])
+  // const serverLink = "http://localhost:5000/attendees/"//"https://arcane-anchorage-41306.herokuapp.com/attendees"//
 
   const columns = [
     { field: "date", headerName: "Date", width: 120 },
@@ -64,7 +45,7 @@ export default function AttendeesList() {
       renderCell: (params) => {
         return (
           <div className="userListUser">
-            <img className="userListImg" src={params.row.avatar} alt="" />
+            {/* <img className="userListImg" src={params.row.avatar} alt="" /> */}
             {params.row.username}
           </div>
         );
@@ -101,6 +82,7 @@ export default function AttendeesList() {
 
   return (
     <div className="userList">
+      <h3 style={{marginBottom:"20px", paddingLeft: "10px"}}>Attendees</h3>
       <DataGrid
         rows={data}
         disableSelectionOnClick
