@@ -49,6 +49,8 @@ export default function Sidebar() {
         controller.abort();
       }
 
+    }).catch(e => {
+      console.log(e);
     })
   }, [])
 
@@ -58,12 +60,14 @@ export default function Sidebar() {
     const options = {
       signal: signal
     }
-    const attendanceUrl = `http://localhost:5000/attendees/${serviceDate}`;
+    const attendanceUrl = `http://localhost:5000/members/attendance/${serviceDate}`;
 
     if(serviceDate !== ""){
       fetch(attendanceUrl, options).then(res => res.json()).then(res => {
         console.log(res);
         setAttendanceRecords(res);
+      }).catch(e => {
+        console.log(e);
       });
       
     }
