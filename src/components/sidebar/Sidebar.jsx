@@ -31,7 +31,7 @@ export default function Sidebar() {
     const options = {
       signal: signal
     }
-    const datesUrl = "http://localhost:5000/attendees/";
+    const datesUrl = "https://arcane-anchorage-41306.herokuapp.com/attendees/";
 
     fetch(datesUrl, options).then(res => res.json()).then(res => {
       // let serviceDates = []
@@ -60,7 +60,7 @@ export default function Sidebar() {
     const options = {
       signal: signal
     }
-    const attendanceUrl = `http://localhost:5000/members/attendance/${serviceDate}`;
+    const attendanceUrl = `https://arcane-anchorage-41306.herokuapp.com/members/attendance/${serviceDate}`;
 
     if(serviceDate !== ""){
       fetch(attendanceUrl, options).then(res => res.json()).then(res => {
