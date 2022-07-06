@@ -6,10 +6,12 @@ export const ContextProvider = ({ children }) => {
 
     const [screenSize, setScreenSize] = useState(undefined);
     const [attendanceRecords, setAttendanceRecords] = useState([]);
+    const [serviceDate, setServiceDate] = useState('')
   
     const contextStateVars = {
   
-      attendanceRecords, setAttendanceRecords
+      attendanceRecords, setAttendanceRecords,
+      serviceDate, setServiceDate
       
     }
   

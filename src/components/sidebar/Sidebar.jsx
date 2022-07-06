@@ -18,10 +18,9 @@ import { useStateContext } from '../../contexts/ContextProvider';
 export default function Sidebar() {
 
 
-  const { setAttendanceRecords } = useStateContext();
+  const { setAttendanceRecords, serviceDate, setServiceDate } = useStateContext();
 
-  const [dates, setDates] = useState([])
-  const [serviceDate, setServiceDate] = useState('');
+  const [dates, setDates] = useState([]);
 
   //Get 
 
@@ -94,6 +93,7 @@ export default function Sidebar() {
       <div className="service-title">
       </div>
       <div className="sidebarWrapper">
+        <p>Select Date</p>
         <select name="select" className="service-selector" onChange={(e) => setServiceDate(e.target.value)}>
           {services.map( (service, i) => <option value={service} key={i} >{service}</option> )}
         </select>
