@@ -7,12 +7,10 @@ import { useEffect, useState } from "react";
 export default function FeaturedInfo() {
 
   const { attendanceRecords, serviceDate, server } = useStateContext();
-  //console.log(serviceDate);
   const [members, setMembers] = useState([])
 
   const totalAttendance = attendanceRecords.map(e => e.attendanceRecords).flat().filter(e => e.date === serviceDate).map(e => e.attendees).reduce((a,b) =>a+b, 0);
   const firstTimers = attendanceRecords.filter(rec => rec.attendanceRecords.length === 1);
-  //console.log(totalAttendance);
 
   
   useEffect(() => {

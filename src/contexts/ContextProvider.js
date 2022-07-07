@@ -7,6 +7,7 @@ export const ContextProvider = ({ children }) => {
     const [screenSize, setScreenSize] = useState(undefined);
     const [attendanceRecords, setAttendanceRecords] = useState([]);
     const [serviceDate, setServiceDate] = useState('');
+    const [dates, setDates] = useState([]);
     
 
     const localHost = "http://localhost:5000";
@@ -17,7 +18,8 @@ export const ContextProvider = ({ children }) => {
   
       attendanceRecords, setAttendanceRecords,
       serviceDate, setServiceDate,
-      server
+      server,
+      dates, setDates
       
     }
   

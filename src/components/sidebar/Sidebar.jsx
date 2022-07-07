@@ -18,9 +18,8 @@ import { useStateContext } from '../../contexts/ContextProvider';
 export default function Sidebar() {
 
 
-  const { setAttendanceRecords, serviceDate, setServiceDate, server } = useStateContext();
+  const { setAttendanceRecords, serviceDate, setServiceDate, dates, setDates, server } = useStateContext();
 
-  const [dates, setDates] = useState([]);
 
   //Get 
 
@@ -33,9 +32,13 @@ export default function Sidebar() {
     const datesUrl = `${server}/attendees/`;
 
     fetch(datesUrl, options).then(res => res.json()).then(res => {
+
+      const fullDateObjs = res.map(date => convertDateToDateStringObj(date)).sort( (e1, e2) => {
+        return epochConvertDate(e2.date).fullDate - epochConvertDate(e1.date).fullDate;
+      } )
   
-      setDates(res)
-      setServiceDate(res[0])
+      setDates(fullDateObjs)
+      setServiceDate(fullDateObjs[0].date)
 
       return () => {
         //cancel the request before the component unmounts
@@ -54,19 +57,27 @@ export default function Sidebar() {
     const month = parseInt(dateArray[1])-1;
     const year = parseInt(dateArray[2]);
 
-    const fullDate = new Date(year,month,day);
-    return fullDate;
+    const fullDate = new Date(year,month,day)
+    
+    let weekBeforeTimeStamp = fullDate.getTime() - 604800000;
+    let weekBeforeDate = `${new Date(weekBeforeTimeStamp).getDate()}.${new Date(weekBeforeTimeStamp).getMonth()+1}.${new Date(weekBeforeTimeStamp).getFullYear()}`
+
+    return {fullDate, weekBeforeDate};
 
   }
+
+  console.log(dates)
 
   function convertDateToDateStringObj(date){
 
-    const fullDateString = epochConvertDate(date).toDateString()
+    const fullDateString = epochConvertDate(date).fullDate.toDateString()
+
+    const weekBeforeDate = epochConvertDate(date).weekBeforeDate
     
-    return {fullDateString, date}
+    return {fullDateString, date, weekBeforeDate}
 
   }
-  let fullDateObjs = dates.map(date => convertDateToDateStringObj(date))
+  
   // console.log(fullDateObjs)
   
   //Get the date for exactly day a week ago
@@ -104,7 +115,7 @@ export default function Sidebar() {
     "Sunday Service - Sunday, 19th June 2022"
   ]
 
-  services = fullDateObjs;
+  services = dates;
   //console.log(services)
 
   return (
