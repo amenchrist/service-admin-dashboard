@@ -6,12 +6,18 @@ export const ContextProvider = ({ children }) => {
 
     const [screenSize, setScreenSize] = useState(undefined);
     const [attendanceRecords, setAttendanceRecords] = useState([]);
-    const [serviceDate, setServiceDate] = useState('')
-  
+    const [serviceDate, setServiceDate] = useState('');
+    
+
+    const localHost = "http://localhost:5000";
+    const host = 'https://arcane-anchorage-41306.herokuapp.com';
+    const server = localHost;
+
     const contextStateVars = {
   
       attendanceRecords, setAttendanceRecords,
-      serviceDate, setServiceDate
+      serviceDate, setServiceDate,
+      server
       
     }
   

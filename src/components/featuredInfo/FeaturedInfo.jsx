@@ -6,21 +6,22 @@ import { useEffect, useState } from "react";
 
 export default function FeaturedInfo() {
 
-  const { attendanceRecords, serviceDate } = useStateContext();
+  const { attendanceRecords, serviceDate, server } = useStateContext();
 
   const [members, setMembers] = useState([])
 
   const totalAttendance = attendanceRecords.map(e => e.attendanceRecords).flat().filter(e => e.date === serviceDate).map(e => e.attendees).reduce((a,b) =>a+b, 0);
   const firstTimers = attendanceRecords.filter(rec => rec.attendanceRecords.length === 1);
-  console.log(firstTimers);
+  //console.log(totalAttendance);
 
+  
   useEffect(() => {
     const controller = new AbortController();
     const signal = controller.signal;
     const options = {
       signal: signal
     }
-    const allMembersUrl = `https://arcane-anchorage-41306.herokuapp.com/members/`;
+    const allMembersUrl = `${server}/members/`;
     fetch(allMembersUrl, options).then(res => res.json()).then(res => {
       console.log(res);
       setMembers(res);
@@ -39,7 +40,7 @@ export default function FeaturedInfo() {
   const oldMembers = members.filter(member => member.attendanceRecords.length !== 1)
   const absentees = oldMembers.filter(member => member.attendanceRecords.filter(rec => rec.date === serviceDate).length === 0)
 
-  console.log(absentees)
+  //console.log(absentees)
   
 
   return (

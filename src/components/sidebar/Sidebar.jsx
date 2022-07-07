@@ -18,7 +18,7 @@ import { useStateContext } from '../../contexts/ContextProvider';
 export default function Sidebar() {
 
 
-  const { setAttendanceRecords, serviceDate, setServiceDate } = useStateContext();
+  const { setAttendanceRecords, serviceDate, setServiceDate, server } = useStateContext();
 
   const [dates, setDates] = useState([]);
 
@@ -30,21 +30,15 @@ export default function Sidebar() {
     const options = {
       signal: signal
     }
-    const datesUrl = "https://arcane-anchorage-41306.herokuapp.com/attendees/";
+    const datesUrl = `${server}/attendees/`;
 
     fetch(datesUrl, options).then(res => res.json()).then(res => {
-      // let serviceDates = []
-      // res.forEach(rec => {
-      //   if(!serviceDates.includes(rec.date)){
-      //     serviceDates.push(rec.date)
-      //   }
-      // })
+  
       setDates(res)
       setServiceDate(res[0])
-      //console.log(dates)
-      // res.forEach(record => )
+
       return () => {
-        //cancel the request before the compnent unmounts
+        //cancel the request before the component unmounts
         controller.abort();
       }
 
@@ -53,13 +47,15 @@ export default function Sidebar() {
     })
   }, [])
 
+  console.log(dates)
+
   useEffect(()=>{
     const controller = new AbortController();
     const signal = controller.signal;
     const options = {
       signal: signal
     }
-    const attendanceUrl = `https://arcane-anchorage-41306.herokuapp.com/members/attendance/${serviceDate}`;
+    const attendanceUrl = `${server}/members/attendance/${serviceDate}`;
 
     if(serviceDate !== ""){
       fetch(attendanceUrl, options).then(res => res.json()).then(res => {
