@@ -47,7 +47,30 @@ export default function Sidebar() {
     })
   }, [])
 
-  console.log(dates)
+  //Turn dates into Full date string
+  function epochConvertDate(date){
+    const dateArray = date.split(".")
+    const day = parseInt(dateArray[0]);
+    const month = parseInt(dateArray[1])-1;
+    const year = parseInt(dateArray[2]);
+
+    const fullDate = new Date(year,month,day);
+    return fullDate;
+
+  }
+
+  function convertDateToDateStringObj(date){
+
+    const fullDateString = epochConvertDate(date).toDateString()
+    
+    return {fullDateString, date}
+
+  }
+  let fullDateObjs = dates.map(date => convertDateToDateStringObj(date))
+  // console.log(fullDateObjs)
+  
+  //Get the date for exactly day a week ago
+  //get the attendance values for the same day the previous week
 
   useEffect(()=>{
     const controller = new AbortController();
@@ -59,7 +82,7 @@ export default function Sidebar() {
 
     if(serviceDate !== ""){
       fetch(attendanceUrl, options).then(res => res.json()).then(res => {
-        console.log(res);
+        // console.log(res);
         setAttendanceRecords(res);
       }).catch(e => {
         console.log(e);
@@ -81,7 +104,7 @@ export default function Sidebar() {
     "Sunday Service - Sunday, 19th June 2022"
   ]
 
-  services = dates;
+  services = fullDateObjs;
   //console.log(services)
 
   return (
@@ -90,8 +113,10 @@ export default function Sidebar() {
       </div>
       <div className="sidebarWrapper">
         <p>Select Date</p>
-        <select name="select" className="service-selector" onChange={(e) => setServiceDate(e.target.value)}>
-          {services.map( (service, i) => <option value={service} key={i} >{service}</option> )}
+        <select name="select" className="service-selector" onChange={(e) => {
+          setServiceDate(services.filter(obj => obj.fullDateString === e.target.value)[0].date)
+        }}>
+          {services.map( (service, i) => <option value={service.fullDateString} key={i} >{service.fullDateString}</option> )}
         </select>
         <div className="sidebarMenu">
           <h3 className="sidebarTitle">Dashboard</h3>
