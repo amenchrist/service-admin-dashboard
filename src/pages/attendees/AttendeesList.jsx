@@ -8,13 +8,17 @@ import { useStateContext } from '../../contexts/ContextProvider';
 
 export default function AttendeesList() {
 
-  const { attendanceRecords } = useStateContext();
+  const { attendanceRecords, attendees, } = useStateContext();
   const [data, setData] = useState(attendanceRecords);
   console.log(attendanceRecords)
 
   useEffect(()=>{
     const newData = []
-    attendanceRecords.forEach(m => {
+    attendanceRecords.forEach((m,i) => {
+      console.log(m.id)
+      if(m.id === undefined){
+        m.id = `No ID assigned ${i}`
+      }
         m = {
         id: m.id,
         attendees: m.attendees,

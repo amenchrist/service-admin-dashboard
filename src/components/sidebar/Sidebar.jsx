@@ -18,7 +18,7 @@ import { useStateContext } from '../../contexts/ContextProvider';
 export default function Sidebar() {
 
 
-  const { setAttendanceRecords, serviceDate, setServiceDate, dates, setDates, server } = useStateContext();
+  const { setAttendanceRecords, serviceDate, setServiceDate, dates, setDates, server, setLastWeekDate } = useStateContext();
 
 
   //Get 
@@ -39,6 +39,7 @@ export default function Sidebar() {
   
       setDates(fullDateObjs)
       setServiceDate(fullDateObjs[0].date)
+      setLastWeekDate(fullDateObjs[0].weekBeforeDate)
 
       return () => {
         //cancel the request before the component unmounts
@@ -125,7 +126,8 @@ export default function Sidebar() {
       <div className="sidebarWrapper">
         <p>Select Date</p>
         <select name="select" className="service-selector" onChange={(e) => {
-          setServiceDate(services.filter(obj => obj.fullDateString === e.target.value)[0].date)
+          setServiceDate(services.filter(obj => obj.fullDateString === e.target.value)[0].date);
+          setLastWeekDate(services.filter(obj => obj.fullDateString === e.target.value)[0].weekBeforeDate)
         }}>
           {services.map( (service, i) => <option value={service.fullDateString} key={i} >{service.fullDateString}</option> )}
         </select>
