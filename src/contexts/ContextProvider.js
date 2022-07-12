@@ -1,16 +1,18 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import {getAttendees, getFirstTimers, getAbsentees } from '../functions';
 
 const StateContext = createContext();
 
 export const ContextProvider = ({ children }) => {
 
-    const [screenSize, setScreenSize] = useState(undefined);
     const [attendanceRecords, setAttendanceRecords] = useState([]);
     const [serviceDate, setServiceDate] = useState('');
     const [dates, setDates] = useState([]);
-    const [members, setMembers] = useState([]);
     const [lastWeekDate, setLastWeekDate] = useState('');
+    const [members, setMembers] = useState([]);
     const [attendees, setAttendees] = useState([])
+    const [firstTimers, setFirstTimers] = useState([])
+    const [absentees, setAbsentees] = useState([])
     
 
     const localHost = "http://localhost:5000";
@@ -26,7 +28,6 @@ export const ContextProvider = ({ children }) => {
 
       const allMembersUrl = `${server}/members/`;
       fetch(allMembersUrl, options).then(res => res.json()).then(res => {
-        console.log(res);
         setMembers(res);
       }).catch(e => {
         console.log(e);
@@ -36,7 +37,15 @@ export const ContextProvider = ({ children }) => {
         //cancel the request before the compnent unmounts
         controller.abort();
       }
-    }, [])
+    }, [server]);
+
+
+    useEffect(() => {
+      setAttendees(getAttendees(members, serviceDate));
+      setFirstTimers(getFirstTimers(members, serviceDate));
+      setAbsentees(getAbsentees(members, serviceDate));
+    },[serviceDate, members])
+
 
     const contextStateVars = {
   
@@ -46,7 +55,7 @@ export const ContextProvider = ({ children }) => {
       dates, setDates,
       members, setMembers,
       lastWeekDate,setLastWeekDate,
-      attendees, setAttendees
+      attendees, absentees, firstTimers
       
     }
   

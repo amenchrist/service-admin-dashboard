@@ -17,11 +17,7 @@ import { useStateContext } from '../../contexts/ContextProvider';
 
 export default function Sidebar() {
 
-
   const { setAttendanceRecords, serviceDate, setServiceDate, dates, setDates, server, setLastWeekDate } = useStateContext();
-
-
-  //Get 
 
   useEffect(()=> {
     const controller = new AbortController();
@@ -67,7 +63,7 @@ export default function Sidebar() {
 
   }
 
-  console.log(dates)
+  //console.log(dates)
 
   function convertDateToDateStringObj(date){
 
@@ -107,7 +103,7 @@ export default function Sidebar() {
       //cancel the request before the compnent unmounts
       controller.abort();
     }
-  }, [serviceDate ])
+  }, [serviceDate])
 
   let services = [
     "Midweek Service - Wednesday, 29th June 2022",

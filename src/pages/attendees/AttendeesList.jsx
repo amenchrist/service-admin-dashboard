@@ -1,51 +1,45 @@
 import "./attendeesList.css";
 import { DataGrid } from "@material-ui/data-grid";
-import { DeleteOutline } from "@material-ui/icons";
-import { userRows } from "../../dummyData";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useStateContext } from '../../contexts/ContextProvider';
 
 export default function AttendeesList() {
 
-  const { attendanceRecords, attendees, } = useStateContext();
-  const [data, setData] = useState(attendanceRecords);
-  console.log(attendanceRecords)
+  const { attendees } = useStateContext();
+  const [data, setData] = useState([]);
 
   useEffect(()=>{
     const newData = []
-    attendanceRecords.forEach((m,i) => {
-      console.log(m.id)
+    attendees.forEach((m,i) => {
+      const d = new Date(m.attendanceRecords[0].time*1000);
       if(m.id === undefined){
         m.id = `No ID assigned ${i}`
       }
         m = {
         id: m.id,
-        attendees: m.attendees,
-        date: m.date,
+        title: m.title,
+        attendees: m.attendanceRecords[0].attendees,
+        date: m.attendanceRecords[0].date,
         username: m.firstName,
         lastName: m.lastName,
-        avatar:
-        "https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
         email: m.email,
-        status: "active",
-        time: m.time
+        church: m.church,
+        time: `${d.getHours()}:${d.getMinutes()<10? `0${d.getMinutes()}`: d.getMinutes()}`
       }
 
       newData.push(m)
     })
 
     setData(newData);
-  }, [attendanceRecords])
-
-  // const serverLink = "http://localhost:5000/attendees/"//"https://arcane-anchorage-41306.herokuapp.com/attendees"//
+  }, [attendees]);
 
   const columns = [
-    { field: "date", headerName: "Date", width: 120 },
+    { field: "title", headerName: "Title", width: 120,  },
     {
       field: "user",
-      headerName: "User",
-      width: 200,
+      headerName: "Name",
+      width: 150,
       renderCell: (params) => {
         return (
           <div className="userListUser">
@@ -60,13 +54,9 @@ export default function AttendeesList() {
     {
       field: "time",
       headerName: "Time",
-      width: 160,
+      width: 110,
     },
-    {
-      field: "status",
-      headerName: "Status",
-      width: 120,
-    },
+    { field: "church", headerName: "Church", width: 120,  },
     {
       field: "action",
       headerName: "Action",
@@ -81,7 +71,7 @@ export default function AttendeesList() {
         );
       },
     },
-    { field: "id", headerName: "ID", width: 90 },
+    { field: "id", headerName: "ID", width: 90, hide: true },
   ];
 
   return (

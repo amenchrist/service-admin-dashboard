@@ -4,33 +4,26 @@ import { DeleteOutline } from "@material-ui/icons";
 import { userRows } from "../../dummyData";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useStateContext } from '../../contexts/ContextProvider';
 
 export default function UserList() {
-  const [data, setData] = useState(userRows);
+  
+  const { members } = useStateContext();
+  const [data, setData] = useState([]);
 
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id));
+    // fetch(serverLink).then(res => res.json()).then(data => {
+      //     setData(data);
+      //   })
   };
-
-  const serverLink = "https://arcane-anchorage-41306.herokuapp.com/members"//"http://localhost:5000/members"; //
-
-  const [dat, setDat] = useState([]);
-
-  useEffect(() => {
-
-    fetch(serverLink).then(res => res.json()).then(data => {
-      //console.log(data);
-      setDat(data);
-    })
-  
-    return () => {
-      
-    }
-  }, []);
 
   useEffect(() => {
     const newData = []
-    dat.forEach(m => {
+    members.forEach((m,i) => {
+      if(m.id === undefined){
+        m.id = `No ID assigned ${i}`
+      }
        m = {
         id: m.id,
         title: m.title,
@@ -51,19 +44,19 @@ export default function UserList() {
     return () => {
       
     }
-  }, [dat])
+  }, [members])
   
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
     { field: "title", headerName: "Title", width: 120 },
     {
       field: "user",
-      headerName: "User",
+      headerName: "Name",
       width: 200,
       renderCell: (params) => {
         return (
           <div className="userListUser">
-            <img className="userListImg" src={params.row.avatar} alt="" />
+            {/* <img className="userListImg" src={params.row.avatar} alt="" /> */}
             {params.row.username}
           </div>
         );
@@ -108,7 +101,7 @@ export default function UserList() {
         rows={data}
         disableSelectionOnClick
         columns={columns}
-        pageSize={8}
+        pageSize={10}
         checkboxSelection
       />
     </div>
