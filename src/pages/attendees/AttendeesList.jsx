@@ -1,5 +1,6 @@
 import "./attendeesList.css";
-import { DataGrid } from "@material-ui/data-grid";
+// import { DataGrid, GridToolbar } from "@material-ui/data-grid";
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useStateContext } from '../../contexts/ContextProvider';
@@ -8,6 +9,7 @@ export default function AttendeesList() {
 
   const { attendees } = useStateContext();
   const [data, setData] = useState([]);
+
 
   useEffect(()=>{
     const newData = []
@@ -76,13 +78,23 @@ export default function AttendeesList() {
 
   return (
     <div className="userList">
-      <h3 style={{marginBottom:"20px", paddingLeft: "10px"}}>Attendees</h3>
+      <h3 style={{marginBottom:"20px", paddingLeft: "10px"}}>Attendees ({data.length})</h3>
       <DataGrid
         rows={data}
         disableSelectionOnClick
         columns={columns}
-        pageSize={10}
+        pageSize={20}
         checkboxSelection
+        components={{ Toolbar: GridToolbar }}
+        componentsProps={{
+          toolbar: {
+            showQuickFilter: true,
+            quickFilterProps: { debounceMs: 100 },
+          },
+        }}
+        disableColumnFilter
+        disableColumnSelector
+        disableDensitySelector
       />
     </div>
   );

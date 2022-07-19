@@ -56,3 +56,13 @@ export function getAbsentees(membersArray, date){
       return []
     }
   }
+
+  export function getAttendanceRecords(membersArray, email){
+    
+    const relevantMember = membersArray.find(m => m.email === email)
+    if(relevantMember){
+      return relevantMember.attendanceRecords.sort((e1, e2) => e2.time - e1.time);
+    }else {
+      return []
+    }
+  }

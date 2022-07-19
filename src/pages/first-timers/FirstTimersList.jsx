@@ -1,5 +1,6 @@
 import "./firstTimersList.css";
-import { DataGrid } from "@material-ui/data-grid";
+// import { DataGrid } from "@material-ui/data-grid";
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { DeleteOutline } from "@material-ui/icons";
 import { userRows } from "../../dummyData";
 import { Link } from "react-router-dom";
@@ -78,13 +79,23 @@ export default function FirstTimersList() {
     
       return (
         <div className="userList">
-          <h3 style={{"margin-bottom":"20px", paddingLeft: "10px"}}>First Timers</h3>
+          <h3 style={{marginBottom:"20px", paddingLeft: "10px"}}>First Timers ({data.length})</h3>
           <DataGrid
             rows={data}
             disableSelectionOnClick
             columns={columns}
             pageSize={10}
             checkboxSelection
+            components={{ Toolbar: GridToolbar }}
+            componentsProps={{
+              toolbar: {
+                showQuickFilter: true,
+                quickFilterProps: { debounceMs: 100 },
+              },
+            }}
+            disableColumnFilter
+            disableColumnSelector
+            disableDensitySelector
           />
         </div>
       );

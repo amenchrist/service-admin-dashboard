@@ -7,10 +7,16 @@ import {
   Publish,
 } from "@material-ui/icons";
 import { useEffect, useState } from "react";
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { Link } from "react-router-dom";
 import "./user.css";
+import { useStateContext } from '../../contexts/ContextProvider';
+import { getAttendanceRecords } from "../../functions";
 
 export default function User() {
+
+  const { members } = useStateContext();
+  const [data, setData] = useState([]);
 
   const [user, setUser] = useState({})
 
@@ -47,6 +53,49 @@ export default function User() {
     }
   }, [user])
 
+  useEffect(() => {
+
+    // setData();
+    const newData = []
+    getAttendanceRecords(members, user.email).forEach((m,i) => {
+      const d = new Date(m.time*1000);
+      if(m.id === undefined){
+        m.id = `No ID assigned ${i}`
+      }
+        m = {
+        id: m.id,
+        day:m.day,
+        attendees: m.attendees,
+        date: m.date,
+        email: m.email,
+        church: m.church,
+        time: `${d.getHours()}:${d.getMinutes()<10? `0${d.getMinutes()}`: d.getMinutes()}`
+      }
+
+      newData.push(m)
+    })
+
+    setData(newData);
+    
+    return () => {
+      
+    }
+  }, [user, members])
+
+  const columns = [
+    { field: "date", headerName: "Date", width: 120,  },
+    { field: "day", headerName: "Day", width: 120,  },
+    { field: "email", headerName: "Email", width: 200 },
+    { field: "attendees", headerName: "Attendees", width: 120 },
+    {
+      field: "time",
+      headerName: "Time",
+      width: 110,
+    },
+    { field: "church", headerName: "Church", width: 120,  },
+    { field: "id", headerName: "ID", width: 90, hide: true },
+  ];
+
   function updateUser(e){
     e.preventDefault();
     let data = {
@@ -56,6 +105,7 @@ export default function User() {
       email,
       phone
     }
+    console.log(data)
 
     const options = {
       method: 'PUT',
@@ -69,15 +119,17 @@ export default function User() {
     .then(data=> setUser(data))
     .catch(err => console.log(err))
   }
+
+  //ADD A TABLE SHOWING THE PERSONS ATTENDANCE RECORDS
   
   
   return (
     <div className="user">
       <div className="userTitleContainer">
         <h1 className="userTitle">Edit User</h1>
-        <Link to="/newUser">
+        {/* <Link to="/newUser">
           <button className="userAddButton">Create</button>
-        </Link>
+        </Link> */}
       </div>
       <div className="userContainer">
         <div className="userShow">
@@ -136,6 +188,7 @@ export default function User() {
                   type="text"
                   placeholder={user.lastName}
                   className="userUpdateInput"
+                  onChange={(e) => setLastName(e.target.value)}
                 />
               </div>
               <div className="userUpdateItem">
@@ -190,6 +243,23 @@ export default function User() {
           </form>
         </div>
       </div>
+      <DataGrid
+        rows={data}
+        disableSelectionOnClick
+        columns={columns}
+        pageSize={20}
+        checkboxSelection
+        components={{ Toolbar: GridToolbar }}
+        componentsProps={{
+          toolbar: {
+            showQuickFilter: true,
+            quickFilterProps: { debounceMs: 100 },
+          },
+        }}
+        disableColumnFilter
+        disableColumnSelector
+        disableDensitySelector
+      />
     </div>
   );
 }
