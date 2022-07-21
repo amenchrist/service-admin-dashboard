@@ -17,7 +17,7 @@ export const ContextProvider = ({ children }) => {
 
     const localHost = "http://localhost:5000";
     const host = 'https://arcane-anchorage-41306.herokuapp.com';
-    const server = localHost;
+    const server = host;
 
     useEffect(() => {
       const controller = new AbortController();
