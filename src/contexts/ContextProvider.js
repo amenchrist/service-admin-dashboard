@@ -5,8 +5,9 @@ const StateContext = createContext();
 
 export const ContextProvider = ({ children }) => {
   
-  const [church, setChurch] = useState('');
+  const [churchName, setChurchName] = useState('');
   const [url, setUrl] = useState('');
+  const [church, setChurch] = useState('');
   
   useEffect(() => {
     setUrl(getParentUrl())
@@ -15,20 +16,25 @@ export const ContextProvider = ({ children }) => {
   useEffect(() => {
     switch(url){
       case "https://christembassy-eastham.org/":
-        setChurch("Christ Embassy East Ham");
+        setChurchName("Christ Embassy East Ham");
+        setChurch("East-Ham")
       break;
       case "https://ceilford.org/":
-        setChurch("Christ Embassy Ilford");
+        setChurchName("Christ Embassy Ilford");
+        setChurch("Ilford")
       break;
       case "https://christembassybarking.org/":
-        setChurch("Christ Embassy Barking");
+        setChurchName("Christ Embassy Barking");
+        setChurch("Barking")
       break;
       case "https://christembassystratford.org/":
-        setChurch("Christ Embassy Stratford");
+        setChurchName("Christ Embassy Stratford");
+        setChurch("Stratford")
       break;
       default:
         console.log("No church identified")
-        setChurch("Christ Embassy");
+        setChurchName("Christ Embassy");
+        setChurch("")
     }
   }, [url])
 
@@ -52,7 +58,7 @@ export const ContextProvider = ({ children }) => {
       signal: signal
     }
 
-    const allMembersUrl = `${server}/members/`;
+    const allMembersUrl = `${server}/members/${church}`;
     fetch(allMembersUrl, options).then(res => res.json()).then(res => {
       setMembers(res);
     }).catch(e => {
@@ -81,7 +87,7 @@ export const ContextProvider = ({ children }) => {
     dates, setDates,
     members, setMembers,
     lastWeekDate,setLastWeekDate,
-    attendees, absentees, firstTimers, church
+    attendees, absentees, firstTimers, churchName
     
   }
 

@@ -5,14 +5,14 @@ import { Link } from "react-router-dom";
 import { useStateContext } from '../../contexts/ContextProvider';
 
 export default function Topbar() {
-  const { church } = useStateContext();
+  const { churchName } = useStateContext();
 
   return (
     <div className="topbar">
       <div className="topbarWrapper">
         <div className="topLeft">
           <Link to="/" className="link">
-            <span className="logo">{church}</span>
+            <span className="logo">{churchName}</span>
           </Link>
           
         </div>
