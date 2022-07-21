@@ -2,14 +2,17 @@ import React from "react";
 import "./topbar.css";
 import { NotificationsNone, Language, Settings } from "@material-ui/icons";
 import { Link } from "react-router-dom";
+import { useStateContext } from '../../contexts/ContextProvider';
 
 export default function Topbar() {
+  const { church } = useStateContext();
+
   return (
     <div className="topbar">
       <div className="topbarWrapper">
         <div className="topLeft">
           <Link to="/" className="link">
-            <span className="logo">Christ Embassy Barking</span>
+            <span className="logo">{church}</span>
           </Link>
           
         </div>

@@ -66,3 +66,10 @@ export function getAbsentees(membersArray, date){
       return []
     }
   }
+
+  export function getParentUrl() {
+    var parentUrl = (window.location != window.parent.location)
+    ? document.referrer
+    : document.location.href;
+    return parentUrl;
+  }
