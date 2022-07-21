@@ -6,12 +6,9 @@ const StateContext = createContext();
 export const ContextProvider = ({ children }) => {
 
     function getParentUrl() {
-      var isInIframe = (parent !== window),
-          parentUrl = null;
-
-      if (isInIframe) {
-          parentUrl = document;
-      }
+      var parentUrl = (window.location != window.parent.location)
+      ? document.referrer
+      : document.location.href;
       return parentUrl;
     }
     console.log("yooo")
