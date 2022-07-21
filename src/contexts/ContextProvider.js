@@ -23,6 +23,9 @@ export const ContextProvider = ({ children }) => {
       case "https://christembassybarking.org/":
         setChurch("Christ Embassy Barking");
       break;
+      case "https://christembassystratford.org/":
+        setChurch("Christ Embassy Stratford");
+      break;
       default:
         console.log("No church identified")
         setChurch("Christ Embassy");
