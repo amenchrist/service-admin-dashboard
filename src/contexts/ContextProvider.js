@@ -5,6 +5,18 @@ const StateContext = createContext();
 
 export const ContextProvider = ({ children }) => {
 
+    function getParentUrl() {
+      var isInIframe = (parent !== window),
+          parentUrl = null;
+
+      if (isInIframe) {
+          parentUrl = document;
+      }
+      return parentUrl;
+    }
+    console.log("yooo")
+    console.log(getParentUrl())
+
     const [attendanceRecords, setAttendanceRecords] = useState([]);
     const [serviceDate, setServiceDate] = useState('');
     const [dates, setDates] = useState([]);
