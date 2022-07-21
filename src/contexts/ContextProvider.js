@@ -69,7 +69,7 @@ export const ContextProvider = ({ children }) => {
       //cancel the request before the compnent unmounts
       controller.abort();
     }
-  }, [server]);
+  }, [server, church]);
 
 
   useEffect(() => {
