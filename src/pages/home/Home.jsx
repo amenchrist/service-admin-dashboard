@@ -1,14 +1,10 @@
 import Chart from "../../components/chart/Chart";
 import FeaturedInfo from "../../components/featuredInfo/FeaturedInfo";
 import "./home.css";
-import { userData } from "../../dummyData";
-import WidgetSm from "../../components/widgetSm/WidgetSm";
 import WidgetLg from "../../components/widgetLg/WidgetLg";
 import { useStateContext } from '../../contexts/ContextProvider';
 import { useState } from "react";
 import { useEffect } from "react";
-import FirstTimersList from "../first-timers/FirstTimersList";
-import AttendeesList from "../attendees/AttendeesList";
 
 export default function Home() {
 
@@ -56,19 +52,12 @@ export default function Home() {
   }, [attendees])
 
   // console.log(attendees)
-  // //chart the attendance total by time
 
-
-  
-
-  // console.log(chart)
-
-  
 
   return (
     <div className="home">
       <FeaturedInfo />
-      <Chart data={chartData} title="Attendance Analytics" grid dataKey="Attendance"/>
+      <Chart data={chartData} title="Attendance Analytics" grid dataKey="Attendance" xAxisKey={"time"}/>
       <div className="homeWidgets">
         {/* <WidgetSm/> */}
         <WidgetLg/>

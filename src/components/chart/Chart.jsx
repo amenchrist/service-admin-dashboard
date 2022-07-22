@@ -8,14 +8,14 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-export default function Chart({ title, data, dataKey, grid }) {
+export default function Chart({ title, data, dataKey, grid, xAxisKey }) {
 
   return (
     <div className="chart">
       <h3 className="chartTitle">{title}</h3>
       <ResponsiveContainer width="100%" aspect={4 / 1}>
         <LineChart data={data}>
-          <XAxis dataKey="time" stroke="#5550bd" />
+          <XAxis dataKey={xAxisKey} stroke="#5550bd" />
           <YAxis />
           <Line type="monotone" dataKey={dataKey} stroke="#5550bd" />
           <Tooltip />

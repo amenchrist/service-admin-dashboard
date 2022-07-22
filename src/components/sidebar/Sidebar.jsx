@@ -202,13 +202,15 @@ export default function Sidebar() {
               Manage
             </li>
             <li className="sidebarListItem">
-              <Timeline className="sidebarIcon" />
-              Analytics
-            </li>
-            <li className="sidebarListItem">
               <Report className="sidebarIcon" />
               Reports
             </li>
+            <Link to="/overview" className="link">
+              <li className="sidebarListItem">
+                <Timeline className="sidebarIcon" />
+                Overview
+              </li>
+            </Link>
           </ul>
         </div>
       </div>

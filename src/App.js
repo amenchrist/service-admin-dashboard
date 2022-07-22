@@ -13,6 +13,7 @@ import AttendeesList from "./pages/attendees/AttendeesList";
 import FirstTimersList from "./pages/first-timers/FirstTimersList";
 import AbsenteesList from "./pages/absentees/AbsenteesList";
 import ComingSoon from "./pages/comingSoon/ComingSoon";
+import Overview from "./pages/overview/Overview";
 
 function App() {
   return (
@@ -50,6 +51,9 @@ function App() {
           </Route>
           <Route path="/newproduct">
             <NewProduct />
+          </Route>
+          <Route path="/overview">
+            <Overview />
           </Route>
           <Route path="/givings">
             <ComingSoon />
