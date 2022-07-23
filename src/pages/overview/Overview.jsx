@@ -30,13 +30,45 @@ export default function Overview() {
 
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   let wedChart = [], sunChart = []
-  for (let i=0; i<12; i++){
+
+  function getWeekNumber(time){
+    let currentDate = new Date(time);
+    let oneJan = new Date(currentDate.getFullYear(),0,1);
+    // let endDec = new Date(currentDate.getFullYear(),11,31);
+    let numberOfDays = Math.ceil((currentDate - oneJan) / (24 * 60 * 60 * 1000));
+    //console.log(numberOfDays)
+    //get month number by adding a week to the oneJan +
+    let result = Math.floor(( currentDate.getDay() + 1 + numberOfDays) / 7);
+    result === 0 || result >51 ? console.log("Problem ", result) : console.log("")
+    switch(result){
+      case 0:
+        result = 1;
+      break;
+      case 52:
+        result = 51;
+      break;
+      default:
+        return result
+    }
+    return result
+  }
+
+  const aWeek = 604800000
+  const currentDate = new Date();
+  const oneJan = new Date(currentDate.getFullYear(),0,1).getTime();
+
+  for (let i=0; i<52; i++){
+    let time = oneJan + (aWeek*i)
+    let weekNumber = getWeekNumber(time)
+
     wedChart[i] = {
-      month: months[i],
+      weekNumber: `Week ${weekNumber}`,
+      month: months[new Date(time).getMonth()],
       "Attendance": 0
     }
     sunChart[i] = {
-      month: months[i],
+      weekNumber: `Week ${weekNumber}`,
+      month: months[new Date(time).getMonth()],
       "Attendance": 0
     }
   }
@@ -70,29 +102,38 @@ export default function Overview() {
   useEffect(()=>{
     //group by month
     wedData.forEach(record => {
-      let month = new Date(record.time*1000).getMonth();
-      wedChart[month] = {
+      let time = record.time*1000;
+      let month = new Date(time).getMonth();
+      let weekNumber = getWeekNumber(time);
+      wedChart[weekNumber] = {
+        weekNumber: `Week ${weekNumber}`,
         month: months[month],
-        "Attendance": wedChart[month]["Attendance"] === undefined? record.attendees : wedChart[month]["Attendance"] + record.attendees
+        "Attendance": wedChart[weekNumber]["Attendance"] === undefined? record.attendees : wedChart[weekNumber]["Attendance"] + record.attendees
       }
     })
     sunData.forEach(record => {
+      let time = record.time*1000;
       let month = new Date(record.time*1000).getMonth();
-      sunChart[month] = {
+      let weekNumber = getWeekNumber(time);
+      
+      sunChart[weekNumber] = {
+        weekNumber: `Week ${weekNumber}`,
         month: months[month],
-        "Attendance": sunChart[month]["Attendance"] === undefined? record.attendees : sunChart[month]["Attendance"] + record.attendees
+        "Attendance": sunChart[weekNumber]["Attendance"] === undefined? record.attendees : sunChart[weekNumber]["Attendance"] + record.attendees
       }
     })
 
     setWednesdayChartData(wedChart)
     setSundayChartData(sunChart)
   },[wedData, sunData])
+  console.log(wedChart)
 
   return (
     <div className="home">
-      <FeaturedInfo />
-      <Chart data={sundayChartData} title="Sunday Services" grid dataKey="Attendance" xAxisKey={"month"}/>
-      <Chart data={wednesdayChartData} title="Wednesday Services" grid dataKey="Attendance" xAxisKey={"month"} />
+      <h2>Year Overview</h2>
+      {/* <FeaturedInfo /> */}
+      <Chart data={sundayChartData} title="Sunday Services" grid dataKey="Attendance" xAxisKey={"weekNumber"}/>
+      <Chart data={wednesdayChartData} title="Wednesday Services" grid dataKey="Attendance" xAxisKey={"weekNumber"} />
     </div>
   );
 }
