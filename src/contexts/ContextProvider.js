@@ -8,6 +8,7 @@ export const ContextProvider = ({ children }) => {
   const [churchName, setChurchName] = useState('');
   const [url, setUrl] = useState('');
   const [church, setChurch] = useState('');
+  const [isSignedIn, setIsSignedIn] = useState(false);
   
   useEffect(() => {
     setUrl(getParentUrl())
@@ -87,7 +88,8 @@ export const ContextProvider = ({ children }) => {
     dates, setDates,
     members, setMembers,
     lastWeekDate,setLastWeekDate,
-    attendees, absentees, firstTimers, churchName
+    attendees, absentees, firstTimers, churchName,
+    isSignedIn, setIsSignedIn
     
   }
 
