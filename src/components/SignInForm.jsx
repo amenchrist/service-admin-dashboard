@@ -32,7 +32,7 @@ const theme = createTheme();
 
 export default function SignInForm() {
 
-    const { setIsSignedIn } = useStateContext();
+    const { setIsSignedIn, setIsRegistered } = useStateContext();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -118,7 +118,7 @@ export default function SignInForm() {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href="#" variant="body2" onClick={() => setIsRegistered(false)}>
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>

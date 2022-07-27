@@ -16,6 +16,7 @@ import ComingSoon from "./pages/comingSoon/ComingSoon";
 import Overview from "./pages/overview/Overview";
 import SignInForm from "./components/SignInForm";
 import { useStateContext } from './contexts/ContextProvider';
+import SignIn from "./pages/SignIn";
 
 function App() {
 
@@ -24,8 +25,7 @@ function App() {
   return (
     <Router>
       {isSignedIn === false ? 
-        <SignInForm />
-        
+        <SignIn />
         :
         <>
           <Topbar />
