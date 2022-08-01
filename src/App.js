@@ -14,66 +14,30 @@ import FirstTimersList from "./pages/first-timers/FirstTimersList";
 import AbsenteesList from "./pages/absentees/AbsenteesList";
 import ComingSoon from "./pages/comingSoon/ComingSoon";
 import Overview from "./pages/overview/Overview";
-import SignInForm from "./components/SignInForm";
 import { useStateContext } from './contexts/ContextProvider';
 import SignIn from "./pages/SignIn";
+import AdminDashboard from "./pages/AdminDashboard";
+import WatchPage from "./pages/WatchPage";
 
 function App() {
 
-  const { isSignedIn } = useStateContext();
+  const { isSignedIn, currentMember } = useStateContext();
 
   return (
-    <Router>
+    <>
       {isSignedIn === false ? 
         <SignIn />
         :
         <>
-          <Topbar />
-          <div className="container">
-            <Sidebar />
-            <Switch>
-              <Route exact path="/">
-                <Home />
-              </Route>
-              <Route path="/attendees">
-                <AttendeesList />
-              </Route>
-              <Route path="/first-timers">
-                <FirstTimersList />
-              </Route>
-              <Route path="/absentees">
-                <AbsenteesList />
-              </Route>
-              <Route path="/users">
-                <UserList />
-              </Route>
-              <Route path="/user/:userId">
-                <User />
-              </Route>
-              <Route path="/newUser">
-                <NewUser />
-              </Route>
-              <Route path="/products">
-                <ProductList />
-              </Route>
-              <Route path="/product/:productId">
-                <Product />
-              </Route>
-              <Route path="/newproduct">
-                <NewProduct />
-              </Route>
-              <Route path="/overview">
-                <Overview />
-              </Route>
-              <Route path="/givings">
-                <ComingSoon />
-              </Route>
-            </Switch>
-          </div>
+          {currentMember.role === "Admin" ?
+            <AdminDashboard />
+            :
+            <WatchPage />
+          }
         </>
       } 
       
-    </Router>
+    </>
   );
 }
 

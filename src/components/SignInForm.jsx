@@ -32,7 +32,7 @@ const theme = createTheme();
 
 export default function SignInForm() {
 
-    const { setIsSignedIn, setIsRegistered } = useStateContext();
+    const { setIsSignedIn, setIsRegistered, setCurrentMember, server } = useStateContext();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -41,7 +41,26 @@ export default function SignInForm() {
       email: data.get('email'),
       password: data.get('password'),
     });
-    setIsSignedIn(true)
+    const extractedData = {
+      email: data.get('email'),
+      password: data.get('password'),
+    }
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(extractedData)
+    }
+    fetch(`${server}/members/signin`, options).then(res => res.json()).then( member => {
+      if(member.email){
+        console.log(member)
+        setCurrentMember(member)
+        setIsSignedIn(true)
+      }else (
+        console.log("Member not found")
+      )
+    })
   };
 
   return (

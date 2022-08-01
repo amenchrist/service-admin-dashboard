@@ -24,7 +24,7 @@ export default function FirstTimersList() {
         title: m.title,
         attendees: m.attendanceRecords[0].attendees,
         date: m.attendanceRecords[0].date,
-        username: `${m.firstName} ${m.lastName}`,
+        username: `${m.firstName}`,
         email: m.email,
         church: m.church,
         time: `${d.getHours()}:${d.getMinutes()<10? `0${d.getMinutes()}`: d.getMinutes()}`
