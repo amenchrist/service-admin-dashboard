@@ -37,7 +37,7 @@ export default function SignInForm() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const email = data.get('email')
+    const email = data.get('email').toLowerCase()
     const password = data.get('password')
 
     if(email.length > 0){
