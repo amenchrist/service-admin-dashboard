@@ -7,11 +7,14 @@ import VideoPlayer from '../components/VideoPlayer'
 function WatchPage() {
   return (
     <>
-        <div>WatchPage</div>
-        <VideoPlayer />
-        <LiveChat />
-        <GivingForm />
-        <FullWidthTabs />
+      <div>
+        <div id='service-player-section' style={{width: "100vw", display: "flex"}}>
+          <div style={{width: "80%"}} >
+            <VideoPlayer />
+          </div>
+          <FullWidthTabs />
+        </div>
+      </div>
     </>
   )
 }

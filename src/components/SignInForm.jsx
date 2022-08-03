@@ -46,7 +46,7 @@ export default function SignInForm() {
         email: email,
         password: password,
       }
-      console.log(data.get('email').length)
+      // console.log(data.get('email').length)
       const options = {
         method: 'POST',
         headers: {
@@ -62,6 +62,8 @@ export default function SignInForm() {
         }else (
           console.log("Member not found")
         )
+      }).catch(err => {
+        console.log(err)
       })
     }
     

@@ -7,6 +7,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import LiveChat from './LiveChat';
+import GivingForm from './GivingForm';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -21,7 +23,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          {children}
         </Box>
       )}
     </div>
@@ -75,13 +77,13 @@ export default function FullWidthTabs() {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          Chat
+          <LiveChat />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
           Bible
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
-          Giving
+          <GivingForm />
         </TabPanel>
       </SwipeableViews>
     </Box>
