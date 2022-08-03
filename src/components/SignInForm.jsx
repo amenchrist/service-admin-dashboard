@@ -37,30 +37,34 @@ export default function SignInForm() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-    const extractedData = {
-      email: data.get('email'),
-      password: data.get('password'),
+    const email = data.get('email')
+    const password = data.get('password')
+
+    if(email.length > 0){
+      
+      const extractedData = {
+        email: email,
+        password: password,
+      }
+      console.log(data.get('email').length)
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(extractedData)
+      }
+      fetch(`${server}/members/signin`, options).then(res => res.json()).then( member => {
+        if(member.email){
+          console.log(member)
+          setCurrentMember(member)
+          setIsSignedIn(true)
+        }else (
+          console.log("Member not found")
+        )
+      })
     }
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(extractedData)
-    }
-    fetch(`${server}/members/signin`, options).then(res => res.json()).then( member => {
-      if(member.email){
-        console.log(member)
-        setCurrentMember(member)
-        setIsSignedIn(true)
-      }else (
-        console.log("Member not found")
-      )
-    })
+    
   };
 
   return (

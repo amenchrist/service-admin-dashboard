@@ -1,4 +1,5 @@
 import React from 'react'
+import FullWidthTabs from '../components/FullWidthTabs'
 import GivingForm from '../components/GivingForm'
 import LiveChat from '../components/LiveChat'
 import VideoPlayer from '../components/VideoPlayer'
@@ -10,6 +11,7 @@ function WatchPage() {
         <VideoPlayer />
         <LiveChat />
         <GivingForm />
+        <FullWidthTabs />
     </>
   )
 }
