@@ -9,6 +9,8 @@ import Select from '@mui/material/Select';
 
 import Button from '@mui/material/Button';
 
+import Link from '@mui/material/Link';
+
 function GivingForm() {
 
   const [category, setCategory] = React.useState('');
@@ -19,8 +21,9 @@ function GivingForm() {
 
 
   return (
-    <div>GivingForm
-      <Box sx={{ minWidth: 120, }}  >
+    <div>
+      <h2 >Giving</h2>
+      <Box sx={{ minWidth: 120, marginTop: '15px' }}  >
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">Category</InputLabel>
         <Select
@@ -36,11 +39,14 @@ function GivingForm() {
           <MenuItem value={"Partnership"}>Partnership</MenuItem>
         </Select>
 
-        <TextField id="outlined-basic" label="Amount" variant="outlined" />
-        <TextField id="outlined-basic" label="Email*" variant="outlined" />
+        <TextField id="outlined-basic" label="Amount" variant="outlined" sx={{marginTop: '15px'}} />
+        <TextField id="outlined-basic" label="Email*" variant="outlined" sx={{marginTop: '15px'}} />
 
-        <Button variant="contained">Contained</Button>
+        <Button variant="contained" sx={{marginTop: '15px', mb: '15px'}}>Approve Payment</Button>
       </FormControl>
+      <Link href="#" variant="body2" >
+        See Giving Records
+      </Link>
     </Box>
       {/* <Box
       component="form"
