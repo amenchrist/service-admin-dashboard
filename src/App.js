@@ -18,6 +18,7 @@ import { useStateContext } from './contexts/ContextProvider';
 import SignIn from "./pages/SignIn";
 import AdminDashboard from "./pages/AdminDashboard";
 import WatchPage from "./pages/WatchPage";
+import MemberDashboard from "./pages/memberDashboard/MemberDashboard";
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
     <>
       {isSignedIn === false ? 
         <SignIn />
+        // <MemberDashboard/>
         :
         <>
           {currentMember.role === "Admin" ?
