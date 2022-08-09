@@ -19,7 +19,7 @@ function WatchPage() {
               </div>
           </Grid>
           <Grid item xs={12} md={4}>
-            <div>
+            <div className='member-box'>
             xs=4
             <FullWidthTabs />
             </div>
