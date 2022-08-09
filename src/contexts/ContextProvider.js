@@ -50,6 +50,7 @@ export const ContextProvider = ({ children }) => {
   const [firstTimers, setFirstTimers] = useState([])
   const [absentees, setAbsentees] = useState([]);
   const [isRegistered, setIsRegistered] = useState(true);
+  const [isNewSite, setIsNewSite] = useState(true);
   
   const localHost = "http://localhost:5000";
   const host = 'https://arcane-anchorage-41306.herokuapp.com';
@@ -93,7 +94,8 @@ export const ContextProvider = ({ children }) => {
     lastWeekDate,setLastWeekDate,
     attendees, absentees, firstTimers, churchName,
     isSignedIn, setIsSignedIn, isRegistered, setIsRegistered,
-    currentMember, setCurrentMember
+    currentMember, setCurrentMember,
+    isNewSite, setIsNewSite
     
   }
 
