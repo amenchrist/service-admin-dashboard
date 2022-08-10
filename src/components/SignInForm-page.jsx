@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import { useStateContext } from '../contexts/ContextProvider';
+import { useEffect } from 'react';
 
 function Copyright(props) {
   return (
@@ -30,9 +31,9 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignInForm() {
+export default function SignInFormPage() {
 
-    const { setIsSignedIn, setIsRegistered, setCurrentMember, server } = useStateContext();
+    const { setIsSignedIn, setIsRegistered, setCurrentMember, server, setIsAdmin, currentMember } = useStateContext();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -68,6 +69,12 @@ export default function SignInForm() {
     }
     
   };
+
+  useEffect(() => {
+    if(currentMember.role === "Admin"){
+      setIsAdmin(true)
+    }
+  }, [currentMember])
 
   return (
     <ThemeProvider theme={theme}>

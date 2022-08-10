@@ -1,5 +1,5 @@
 import React from 'react'
-import SignInForm from '../components/SignInForm'
+import SignInFormPage from '../components/SignInForm-page'
 import SignUpForm from '../components/SignUpForm';
 import { useStateContext } from '../contexts/ContextProvider';
 import { useState } from "react";
@@ -11,7 +11,7 @@ function SignIn() {
     if(isRegistered){
         return (
             <div>
-                <SignInForm />
+                <SignInFormPage  />
             </div>
           )
     }else {

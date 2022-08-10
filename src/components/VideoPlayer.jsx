@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import ReactPlayer from 'react-player';
+import { useStateContext } from '../contexts/ContextProvider';
 
 function VideoPlayer() {
+
+  const { attendanceSubmitted } = useStateContext();
 
   const aspectRatio = 0.5625;
 
   let youtube = 'https://www.youtube.com/watch?v=ysz5S6PUM-U'
   const barking = "https://vcpout-sf01-altnetro.internetmultimediaonline.org/vcp/av5xgmrwkg/playlist.m3u8"
+  const barking2 = "https://vcpout-sf01-altnetro.internetmultimediaonline.org/vcp/e877c883/playlist.m3u8"
   
   const [width, setWidth] = useState('100');
   const [height, setHeight] = useState(width*aspectRatio)
@@ -37,10 +41,20 @@ function VideoPlayer() {
     changeDivHeight()
   }, [width])
 
+  function MutedVideoPlayer() {
+    return (
+      <ReactPlayer url={barking2} playing={true} width={"100%"} height={height} id={"video-player"} volume={0} muted={true} />
+    )
+  }
+
   return (
     <>
       <div style={{backgroundColor: "black", display:"flex", alignItems:"center", height:divHeight}}>
-        <ReactPlayer url={barking} playing={true} width={"100%"} height={height} controls id={"video-player"} />
+        {attendanceSubmitted? 
+        <ReactPlayer url={barking2} playing={true} width={"100%"} height={height} controls id={"video-player"} />
+        :
+        <MutedVideoPlayer />
+        }
       </div>
     </>
   )

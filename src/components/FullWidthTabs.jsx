@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import LiveChat from './LiveChat';
 import GivingForm from './GivingForm';
+import Bible from './Bible';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -80,7 +81,7 @@ export default function FullWidthTabs() {
           <LiveChat />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          Bible
+          <Bible />
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
           <GivingForm />

@@ -51,10 +51,12 @@ export const ContextProvider = ({ children }) => {
   const [absentees, setAbsentees] = useState([]);
   const [isRegistered, setIsRegistered] = useState(true);
   const [isNewSite, setIsNewSite] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [attendanceSubmitted, setAttendanceSubmitted] = useState(false);
   
   const localHost = "http://localhost:5000";
   const host = 'https://arcane-anchorage-41306.herokuapp.com';
-  const server = localHost;
+  const server = host;
 
   useEffect(() => {
     const controller = new AbortController();
@@ -63,18 +65,20 @@ export const ContextProvider = ({ children }) => {
       signal: signal
     }
 
-    const allMembersUrl = `${server}/members/${church}`;
-    fetch(allMembersUrl, options).then(res => res.json()).then(res => {
-      setMembers(res);
-    }).catch(e => {
-      console.log(e);
-    });
+    if(isAdmin){
+      const allMembersUrl = `${server}/members/${church}`;
+      fetch(allMembersUrl, options).then(res => res.json()).then(res => {
+        setMembers(res);
+      }).catch(e => {
+        console.log(e);
+      });
+    }
 
     return () => {
       //cancel the request before the compnent unmounts
       controller.abort();
     }
-  }, [server, church]);
+  }, [server, church, isAdmin]);
 
 
   useEffect(() => {
@@ -93,9 +97,8 @@ export const ContextProvider = ({ children }) => {
     members, setMembers,
     lastWeekDate,setLastWeekDate,
     attendees, absentees, firstTimers, churchName,
-    isSignedIn, setIsSignedIn, isRegistered, setIsRegistered,
-    currentMember, setCurrentMember,
-    isNewSite, setIsNewSite
+    isSignedIn, setIsSignedIn, isRegistered, setIsRegistered, currentMember, setCurrentMember,
+    isNewSite, setIsNewSite, isAdmin, setIsAdmin, attendanceSubmitted, setAttendanceSubmitted
     
   }
 

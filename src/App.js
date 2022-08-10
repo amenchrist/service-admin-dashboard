@@ -1,5 +1,6 @@
 import Sidebar from "./components/sidebar/Sidebar";
 import Topbar from "./components/topbar/Topbar";
+import CssBaseline from '@mui/material/CssBaseline';
 import "./App.css";
 import Home from "./pages/home/Home";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -26,7 +27,9 @@ function App() {
 
   return (
     <>
-      {isSignedIn === false ? 
+      <CssBaseline />
+      <WatchPage />
+      {/* {isSignedIn === false ? 
         <SignIn />
         // <MemberDashboard/>
         :
@@ -37,7 +40,7 @@ function App() {
             <WatchPage />
           }
         </>
-      } 
+      }  */}
       
     </>
   );
