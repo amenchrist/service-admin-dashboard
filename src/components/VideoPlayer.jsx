@@ -19,7 +19,7 @@ function VideoPlayer() {
 
   // useEffect(()=>{
   //   // const parentDiv = document.getElementById('service-player').parentElement;
-  //   const parentDiv = document.getElementById('member-box');
+  //   const parentDiv = document.getElementById('player-box');
   //   setWidth(parentDiv.clientWidth);
   //   console.log(width)
   //   console.log(window.innerWidth)
