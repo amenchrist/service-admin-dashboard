@@ -11,18 +11,11 @@ function WatchPage() {
     <>
       <Box sx={{ flexGrow: 1 }}>
         <Grid container>
-          <Grid item xs={12} md={8}>
-              <div className='member-box' id='player-box'>
-                MemberDashboard
-                xs=12 md-8 VideoPlayer
-                {/* <VideoPlayer /> */}
-              </div>
+          <Grid item xs={12} md={8}>        
+                <VideoPlayer />
           </Grid>
           <Grid item xs={12} md={4}>
-            <div className='member-box'>
-            xs=4
             <FullWidthTabs />
-            </div>
           </Grid>
         </Grid>
       </Box>

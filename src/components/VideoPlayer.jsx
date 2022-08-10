@@ -1,39 +1,46 @@
 import React, { useEffect, useState } from 'react'
 import ReactPlayer from 'react-player';
 
-
-
-
 function VideoPlayer() {
 
-  let lwusa = "https://www.loveworldusa.org/5b18bd6f-9471-455f-bce2-04730a5cf094"
+  const aspectRatio = 0.5625;
+
   let youtube = 'https://www.youtube.com/watch?v=ysz5S6PUM-U'
   const barking = "https://vcpout-sf01-altnetro.internetmultimediaonline.org/vcp/av5xgmrwkg/playlist.m3u8"
-  const [width, setWidth] = useState('100%');
-  // const [height, setHeight] = useState('')
-  const aspectRatio = 0.5625;
-  //const width = '100%';
-  const height = width*aspectRatio 
+  
+  const [width, setWidth] = useState('100');
+  const [height, setHeight] = useState(width*aspectRatio)
+  const [divHeight, setDivHeight] = useState('100%')
 
+  function changeDivHeight(){
+    if(window.innerWidth > 900){
+      setDivHeight("100vh")
+    } else {
+      setDivHeight('')
+    }
+  }
 
+  useEffect(()=>{
+    let videoWidth = document.getElementById("video-player").clientWidth
+    setWidth(videoWidth)
+    window.addEventListener("resize", function(){
+      let videoWidth = document.getElementById("video-player").clientWidth
+      setWidth(videoWidth)
+      setHeight(videoWidth*aspectRatio);
+    });
+    changeDivHeight()
+  }, [])
 
-  // useEffect(()=>{
-  //   // const parentDiv = document.getElementById('service-player').parentElement;
-  //   const parentDiv = document.getElementById('player-box');
-  //   setWidth(parentDiv.clientWidth);
-  //   console.log(width)
-  //   console.log(window.innerWidth)
-  // }, [window.innerWidth])
-
-  // useEffect(()=>{
-  //   setHeight(width*aspectRatio)
-  //   console.log(height)
-  // }, [width])
+  useEffect(()=>{
+    setHeight(width*aspectRatio);
+    
+    changeDivHeight()
+  }, [width])
 
   return (
     <>
-      <div style={{backgroundColor: "black"}}>
-        <ReactPlayer url={barking} playing={true} width={width} height={height} controls />
+      <div style={{backgroundColor: "black", display:"flex", alignItems:"center", height:divHeight}}>
+        <ReactPlayer url={barking} playing={true} width={"100%"} height={height} controls id={"video-player"} />
       </div>
     </>
   )
