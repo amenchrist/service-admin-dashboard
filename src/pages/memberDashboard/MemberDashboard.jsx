@@ -17,6 +17,7 @@ function MemberDashboard() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
+      MEMBER DASHBOARD
       <Grid container>
         <Grid item xs={12} md={8}>
             <div className='member-box'>

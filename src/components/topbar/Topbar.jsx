@@ -11,7 +11,7 @@ export default function Topbar() {
     <div className="topbar">
       <div className="topbarWrapper">
         <div className="topLeft">
-          <Link to="/" className="link">
+          <Link to="/admin-dashboard" className="link">
             <span className="logo">{churchName}</span>
           </Link>
           
@@ -28,7 +28,10 @@ export default function Topbar() {
           <div className="topbarIconContainer">
             <Settings />
           </div>
-            <img src="https://images.pexels.com/photos/1526814/pexels-photo-1526814.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt="" className="topAvatar" onClick={() => setIsSignedIn(false)} />
+            {/* <img src="https://images.pexels.com/photos/1526814/pexels-photo-1526814.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt="" className="topAvatar" onClick={() => setIsSignedIn(false)} /> */}
+          <Link to="/member-dashboard" className="link">
+            <img src="https://images.pexels.com/photos/1526814/pexels-photo-1526814.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt="" className="topAvatar" />
+          </Link>
         </div>
       </div>
     </div>

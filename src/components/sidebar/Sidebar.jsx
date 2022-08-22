@@ -15,9 +15,35 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useStateContext } from '../../contexts/ContextProvider';
 
+import { useAdminStateContext } from '../../contexts/AdminContextProvider';
+
 export default function Sidebar() {
 
   const { setAttendanceRecords, serviceDate, setServiceDate, dates, setDates, server, setLastWeekDate } = useStateContext();
+
+  const { setHome, setAttendeesList, setFirstTimersList, setAbsenteesList,  setUserList, setUser, 
+    setNewUser, setProductList, setProduct, setNewProduct,  setOverView,  setComingSoon} = useAdminStateContext();
+
+  const selectors = [
+    'setHome', 'setAttendeesList', 'setFirstTimersList',
+    'setAbsenteesList', 'setUserList', 'setUser', 
+    'setNewUser', 'setProductList', 'setProduct',
+    'setNewProduct', 'setOverView', 'setComingSoon'
+  ]
+  
+  function selectNextPage(selector){
+    for(let i=0; i<selectors.length; i++){
+      if(selectors[i] === selector){
+        selectors[selector](true)
+      } else {
+        selectors[selector](false)
+      }
+    }
+  }
+  // useEffect(()=>{
+
+
+  // } )
 
   useEffect(()=> {
     const controller = new AbortController();
@@ -90,7 +116,7 @@ export default function Sidebar() {
 
     if(serviceDate !== ""){
       fetch(attendanceUrl, options).then(res => res.json()).then(res => {
-        // console.log(res);
+        console.log(res);
         setAttendanceRecords(res);
       }).catch(e => {
         console.log(e);
@@ -130,42 +156,42 @@ export default function Sidebar() {
         <div className="sidebarMenu">
           <h3 className="sidebarTitle">Dashboard</h3>
           <ul className="sidebarList">
-            <Link to="/" className="link">
-            <li className="sidebarListItem active">
+            {/* <Link to="/admin-dashboard" className="link"> */}
+            <li className="sidebarListItem active" onClick={()=> selectNextPage('setHome')} >
               <LineStyle className="sidebarIcon" />
               Home
             </li>
-            </Link>
+            {/* </Link> */}
           </ul>
         </div>
         <div className="sidebarMenu">
           <h3 className="sidebarTitle">Quick Menu</h3>
           <ul className="sidebarList">
-            <Link to="/attendees" className="link">
-              <li className="sidebarListItem">
+            {/* <Link to="/admin-dashboard/attendees" className="link"> */}
+              <li className="sidebarListItem" onClick={()=> selectNextPage('setAttendeesList')}>
                 <BarChart className="sidebarIcon" />
                 Attendees
               </li>
-            </Link>
-            <Link to="/first-timers" className="link">
+            {/* </Link> */}
+            <Link to="/admin-dashboard/first-timers" className="link">
               <li className="sidebarListItem">
                 <PermIdentity className="sidebarIcon" />
                 First Timers
               </li>
             </Link>
-            <Link to="/absentees" className="link">
+            <Link to="/admin-dashboard/absentees" className="link">
               <li className="sidebarListItem">
                 <PermIdentity className="sidebarIcon" />
                 Absentees
               </li>
             </Link>
-            <Link to="/givings" className="link">
+            <Link to="/admin-dashboard/givings" className="link">
               <li className="sidebarListItem">
                 <AttachMoney className="sidebarIcon" />
                 Givings
               </li>
             </Link>
-            <Link to="/users" className="link">
+            <Link to="/admin-dashboard/users" className="link">
               <li className="sidebarListItem">
                 <PermIdentity className="sidebarIcon" />
                 Members
@@ -205,7 +231,7 @@ export default function Sidebar() {
               <Report className="sidebarIcon" />
               Reports
             </li>
-            <Link to="/overview" className="link">
+            <Link to="/admin-dashboard/overview" className="link">
               <li className="sidebarListItem">
                 <Timeline className="sidebarIcon" />
                 Overview

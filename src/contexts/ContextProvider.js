@@ -56,7 +56,11 @@ export const ContextProvider = ({ children }) => {
   
   const localHost = "http://localhost:5000";
   const host = 'https://arcane-anchorage-41306.herokuapp.com';
-  const server = host;
+  let server = localHost;
+
+  // if(window.location.href.includes('localhost:3000')){
+  //   server = localHost
+  // }
 
   useEffect(() => {
     const controller = new AbortController();
@@ -73,6 +77,13 @@ export const ContextProvider = ({ children }) => {
         console.log(e);
       });
     }
+
+    const allMembersUrl = `${server}/members/${church}`;
+      fetch(allMembersUrl, options).then(res => res.json()).then(res => {
+        setMembers(res);
+      }).catch(e => {
+        console.log(e);
+      });
 
     return () => {
       //cancel the request before the compnent unmounts

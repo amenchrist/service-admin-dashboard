@@ -8,13 +8,14 @@ import { useEffect } from "react";
 
 export default function Home() {
 
-  const { attendees } = useStateContext();
+  const { attendanceRecords } = useStateContext();
   const [ chartData, setChartData ] = useState([]);
 
   
 
   useEffect(()=>{
-    let chartD = attendees.map(m => {
+    console.log(attendanceRecords)
+    let chartD = attendanceRecords.map(m => {
       return m.attendanceRecords
     })
 
@@ -26,7 +27,7 @@ export default function Home() {
       }
     }
 
-    //console.log(chartD.flat())
+    console.log(chartD.flat())
     //final output
     
 
@@ -49,9 +50,9 @@ export default function Home() {
     //console.log(chart)
 
     setChartData(chart)
-  }, [attendees])
+  }, [attendanceRecords])
 
-  // console.log(attendees)
+  // console.log(attendanceRecords)
 
 
   return (

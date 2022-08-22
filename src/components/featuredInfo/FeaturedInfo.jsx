@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 export default function FeaturedInfo() {
 
-  const { serviceDate, members, lastWeekDate, absentees, attendees, firstTimers } = useStateContext();
+  const { serviceDate, members, lastWeekDate, absentees, attendanceRecords, firstTimers } = useStateContext();
 
   const [ totalAttendance, setTotalAttendance ] = useState(0);
   const [ totalAttendanceLastWeek, setTotalAttendanceLastWeek ] = useState([]);
@@ -16,12 +16,12 @@ export default function FeaturedInfo() {
   const [ absenteesLastWeek, setAbsenteesLastWeek ] = useState([]);
 
   useEffect(()=>{
-    setTotalAttendance(getTotalAttendance(attendees, serviceDate));
-    setTotalAttendanceLastWeek(getTotalAttendance(attendees, lastWeekDate));
+    setTotalAttendance(getTotalAttendance(attendanceRecords, serviceDate));
+    setTotalAttendanceLastWeek(getTotalAttendance(attendanceRecords, lastWeekDate));
     setTotalFirstTimers(getTotalAttendance(firstTimers, serviceDate));
     setTotalFirstTimersLastWeek(getTotalAttendance(firstTimers, lastWeekDate));
     setAbsenteesLastWeek(getAbsentees(members, lastWeekDate));
-  }, [attendees, firstTimers, members, serviceDate, lastWeekDate])
+  }, [attendanceRecords, firstTimers, members, serviceDate, lastWeekDate])
 
   // const totalAttendance = getTotalAttendance(attendees, serviceDate);
   // const totalAttendanceLastWeek =  getTotalAttendance(members, lastWeekDate);
@@ -58,7 +58,7 @@ export default function FeaturedInfo() {
   return (
     <div className="featured">
       <div className="featuredItem">
-        <Link to="/attendees" className="link">
+        <Link to="/admin-dashboard/attendees" className="link">
           <span className="featuredTitle">Total Attendance</span>
           <div className="featuredMoneyContainer">
             <span className="featuredMoney">{totalAttendance}</span>
@@ -70,7 +70,7 @@ export default function FeaturedInfo() {
         </Link>
       </div>
       <div className="featuredItem">
-        <Link to="/first-timers" className="link">
+        <Link to="/admin-dashboard/first-timers" className="link">
           <span className="featuredTitle">First Timers</span>
           <div className="featuredMoneyContainer">
             <span className="featuredMoney">{totalFirstTimers}</span>
@@ -82,7 +82,7 @@ export default function FeaturedInfo() {
         </Link>
       </div>
       <div className="featuredItem">
-        <Link to="/absentees" className="link">
+        <Link to="/admin-dashboard/absentees" className="link">
           <span className="featuredTitle">Absentees</span>
           <div className="featuredMoneyContainer">
             <span className="featuredMoney">{absentees.length}</span>

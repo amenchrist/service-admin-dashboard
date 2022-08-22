@@ -28,7 +28,19 @@ function App() {
   return (
     <>
       <CssBaseline />
-      <WatchPage />
+      <Router >
+        <Switch>
+          <Route exact path="/">
+            <WatchPage />
+          </Route>
+          <Route exact path="/admin-dashboard">
+            <AdminDashboard />
+          </Route>
+          <Route exact path="/member-dashboard">
+            <MemberDashboard />
+          </Route>         
+        </Switch>
+      </Router>
       {/* {isSignedIn === false ? 
         <SignIn />
         // <MemberDashboard/>
