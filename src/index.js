@@ -7,11 +7,11 @@ import { ContextProvider } from './contexts/ContextProvider';
 
 ReactDOM.render(
   <ContextProvider>
-    <AdminContextProvider>
+
       <React.StrictMode>
         <App />
       </React.StrictMode>
-    </AdminContextProvider>
+
   </ContextProvider>,
   document.getElementById('root')
 );

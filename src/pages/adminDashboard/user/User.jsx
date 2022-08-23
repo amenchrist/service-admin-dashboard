@@ -10,8 +10,8 @@ import { useEffect, useState } from "react";
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { Link } from "react-router-dom";
 import "./user.css";
-import { useStateContext } from '../../contexts/ContextProvider';
-import { getAttendanceRecords } from "../../functions";
+import { useStateContext } from '../../../contexts/ContextProvider';
+import { getAttendanceRecords } from "../../../functions";
 
 export default function User() {
 

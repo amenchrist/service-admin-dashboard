@@ -11,7 +11,7 @@ import { useStateContext } from '../contexts/ContextProvider';
 
 function WatchPage() {
 
-  const { attendanceSubmitted, setAttendanceSubmitted } = useStateContext();
+  const { attendanceSubmitted } = useStateContext();
 
   return (
     <>

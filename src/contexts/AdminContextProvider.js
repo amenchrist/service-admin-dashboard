@@ -17,12 +17,25 @@ export const AdminContextProvider = ({ children }) => {
     const [overView, setOverView] = useState(false);
     const [comingSoon, setComingSoon] = useState(false);
 
+    const [dashboardState, setDashboardState] = useState({
+      home: true,
+      attendeesList: false,
+      firstTimersList: false,
+      absenteesList: false,
+      userList: false,
+      user: false,
+      newUser: false,
+      overview: false,
+      comingSoon: false
+    })
+
 
   const contextStateVars = {
     home, setHome, attendeesList, setAttendeesList, firstTimersList, setFirstTimersList,
     absenteesList, setAbsenteesList, userList, setUserList, user, setUser,
     newUser, setNewUser, productList, setProductList, product, setProduct,
-    newProduct, setNewProduct, overView, setOverView, comingSoon, setComingSoon
+    newProduct, setNewProduct, overView, setOverView, comingSoon, setComingSoon,
+    dashboardState, setDashboardState
   }
 
   return (

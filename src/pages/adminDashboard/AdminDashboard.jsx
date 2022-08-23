@@ -1,5 +1,5 @@
-import Sidebar from "../components/sidebar/Sidebar";
-import Topbar from "../components/topbar/Topbar";
+import Sidebar from "../../components/sidebar/Sidebar";
+import Topbar from "../../components/topbar/Topbar";
 import Home from "./home/Home";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import UserList from "./userList/UserList";
@@ -13,28 +13,19 @@ import FirstTimersList from "./first-timers/FirstTimersList";
 import AbsenteesList from "./absentees/AbsenteesList";
 import ComingSoon from "./comingSoon/ComingSoon";
 import Overview from "./overview/Overview";
-import { useStateContext } from '../contexts/ContextProvider';
+import { useStateContext } from '../../contexts/ContextProvider';
 import { useState } from "react";
 
-import { AdminContextProvider, useAdminStateContext } from '../contexts/AdminContextProvider';
+import { useAdminStateContext } from '../../contexts/AdminContextProvider';
 
 function AdminDashboard() {
 
   const { member } = useStateContext();
-  const { home, attendeesList, firstTimersList, absenteesList } = useAdminStateContext();
-
+  const {  dashboardState } = useAdminStateContext();
+  const { home, attendeesList, firstTimersList, absenteesList, userList, overview, comingSoon } = dashboardState;
  
-  const [userList, setUserList] = useState(true);
-  const [user, setUser] = useState(true);
-  const [newUser, setNewUser] = useState(true);
-  const [productList, setProductList] = useState(true);
-  const [product, setProduct] = useState(true);
-  const [newProduct, setNewProduct] = useState(true);
-  const [overView, setOverView] = useState(true);
-  const [comingSoon, setComingSoon] = useState(true);
-
   const page = () => {
-    console.log(home)
+    // console.log(home)
     switch(true){
         case attendeesList:
             return (<AttendeesList />)
@@ -42,6 +33,12 @@ function AdminDashboard() {
             return (<FirstTimersList />)
         case absenteesList:
             return (<AbsenteesList />)
+        case userList:
+            return (<UserList />)
+        case overview:
+            return (<Overview />)
+        case comingSoon:
+            return (<ComingSoon />)
         default:
             return (<Home />)
     }
@@ -49,12 +46,11 @@ function AdminDashboard() {
 
   return (
     <>
-        <Topbar />
-        <div className="container">
-            <Sidebar />
-            {page()}
-        </div>
-     </>
+      <div className="container">
+          <Sidebar />
+          {page()}
+      </div>
+    </>
     // <Router>
     //     <Topbar />
     //     <div className="container">
@@ -95,10 +91,10 @@ function AdminDashboard() {
     //             </Route>
     //             <Route path="/admin-dashboard/givings">
     //                 <ComingSoon />
-    //             </Route>Redirect
+    //             </Route>
     //             <Route path="/member-dashboard">
-    //                 <Redirect to='/member-dashboard' />
-    //             </Route>Redirect
+    //                 <Redirect to='/' />
+    //             </Route>
     //         </Switch>
     //     </div>
       

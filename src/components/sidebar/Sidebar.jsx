@@ -22,28 +22,34 @@ export default function Sidebar() {
   const { setAttendanceRecords, serviceDate, setServiceDate, dates, setDates, server, setLastWeekDate } = useStateContext();
 
   const { setHome, setAttendeesList, setFirstTimersList, setAbsenteesList,  setUserList, setUser, 
-    setNewUser, setProductList, setProduct, setNewProduct,  setOverView,  setComingSoon} = useAdminStateContext();
+    setNewUser, setProductList, setProduct, setNewProduct,  setOverView,  setComingSoon, setDashboardState} = useAdminStateContext();
 
   const selectors = [
     'setHome', 'setAttendeesList', 'setFirstTimersList',
     'setAbsenteesList', 'setUserList', 'setUser', 
     'setNewUser', 'setProductList', 'setProduct',
     'setNewProduct', 'setOverView', 'setComingSoon'
-  ]
+  ];
   
-  function selectNextPage(selector){
-    for(let i=0; i<selectors.length; i++){
-      if(selectors[i] === selector){
-        selectors[selector](true)
-      } else {
-        selectors[selector](false)
-      }
-    }
+  const defaultDashboardState = {
+    home: false,
+    attendeesList: false,
+    firstTimersList: false,
+    absenteesList: false,
+    userList: false,
+    user: false,
+    newUser: false,
+    overview: false,
+    comingSoon: false
   }
-  // useEffect(()=>{
 
-
-  // } )
+  function changeView(view){
+    let state = { ...defaultDashboardState}
+    state[view] = true
+    console.log(state)
+    setDashboardState(state)
+  }
+  
 
   useEffect(()=> {
     const controller = new AbortController();
@@ -157,7 +163,7 @@ export default function Sidebar() {
           <h3 className="sidebarTitle">Dashboard</h3>
           <ul className="sidebarList">
             {/* <Link to="/admin-dashboard" className="link"> */}
-            <li className="sidebarListItem active" onClick={()=> selectNextPage('setHome')} >
+            <li className="sidebarListItem active" onClick={()=> changeView('home')} >
               <LineStyle className="sidebarIcon" />
               Home
             </li>
@@ -168,35 +174,35 @@ export default function Sidebar() {
           <h3 className="sidebarTitle">Quick Menu</h3>
           <ul className="sidebarList">
             {/* <Link to="/admin-dashboard/attendees" className="link"> */}
-              <li className="sidebarListItem" onClick={()=> selectNextPage('setAttendeesList')}>
+              <li className="sidebarListItem" onClick={()=> changeView('attendeesList')}>
                 <BarChart className="sidebarIcon" />
                 Attendees
               </li>
             {/* </Link> */}
-            <Link to="/admin-dashboard/first-timers" className="link">
-              <li className="sidebarListItem">
+            {/* <Link to="/admin-dashboard/first-timers" className="link"> */}
+              <li className="sidebarListItem" onClick={()=> changeView('firstTimersList')} >
                 <PermIdentity className="sidebarIcon" />
                 First Timers
               </li>
-            </Link>
-            <Link to="/admin-dashboard/absentees" className="link">
-              <li className="sidebarListItem">
+            {/* </Link>
+            <Link to="/admin-dashboard/absentees" className="link"> */}
+              <li className="sidebarListItem" onClick={()=> changeView('absenteesList')}>
                 <PermIdentity className="sidebarIcon" />
                 Absentees
               </li>
-            </Link>
-            <Link to="/admin-dashboard/givings" className="link">
-              <li className="sidebarListItem">
+            {/* </Link>
+            <Link to="/admin-dashboard/givings" className="link"> */}
+              <li className="sidebarListItem" onClick={()=> changeView('comingSoon')} >
                 <AttachMoney className="sidebarIcon" />
                 Givings
               </li>
-            </Link>
-            <Link to="/admin-dashboard/users" className="link">
-              <li className="sidebarListItem">
+            {/* </Link> */}
+            {/* <Link to="/admin-dashboard/users" className="link"> */}
+              <li className="sidebarListItem" onClick={()=> changeView('userList')}>
                 <PermIdentity className="sidebarIcon" />
                 Members
               </li>
-            </Link>
+            {/* </Link> */}
             {/* <li className="sidebarListItem">
               <BarChart className="sidebarIcon" />
               Reports
@@ -231,12 +237,12 @@ export default function Sidebar() {
               <Report className="sidebarIcon" />
               Reports
             </li>
-            <Link to="/admin-dashboard/overview" className="link">
-              <li className="sidebarListItem">
+            {/* <Link to="/admin-dashboard/overview" className="link"> */}
+              <li className="sidebarListItem" onClick={()=> changeView('overview')}>
                 <Timeline className="sidebarIcon" />
                 Overview
               </li>
-            </Link>
+            {/* </Link> */}
           </ul>
         </div>
       </div>

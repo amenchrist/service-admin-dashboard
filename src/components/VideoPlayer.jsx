@@ -18,7 +18,7 @@ function VideoPlayer() {
 
   function changeDivHeight(){
     if(window.innerWidth > 900){
-      setDivHeight("100vh")
+      setDivHeight("95vh")
     } else {
       setDivHeight('')
     }
@@ -43,18 +43,29 @@ function VideoPlayer() {
 
   function MutedVideoPlayer() {
     return (
-      <ReactPlayer url={barking2} playing={true} width={"100%"} height={height} id={"video-player"} volume={0} muted={true} />
+      <ReactPlayer url={barking} playing={true} width={"100%"} height={height} id={"video-player"} volume={0} muted={true} />
     )
   }
 
   return (
     <>
-      <div style={{backgroundColor: "black", display:"flex", alignItems:"center", height:divHeight}}>
+      <div style={{backgroundColor: "black", display:"flex", height:divHeight, flexDirection: 'column', justifyContent: 'center'}}>
         {attendanceSubmitted? 
-        <ReactPlayer url={barking2} playing={true} width={"100%"} height={height} controls id={"video-player"} />
+        <ReactPlayer url={barking} playing={true} width={"100%"} height={height} controls id={"video-player"} />
         :
         <MutedVideoPlayer />
         }
+        <div style={{border: '2px solid grey', width: '100%', height: '50px', display: 'flex', justifyContent: 'space-around', alignItems: 'center'}}>
+            <div style={{color: "white"}}>SHARE</div>
+            <div style={{color: "white"}}>CHURCH DASHBOARD</div>
+            <div style={{color: "white"}}>MY DASHBOARD</div>
+          {/* <Link to="/admin-dashboard" className="link">
+            <div style={{color: "white"}}>CHURCH DASHBOARD</div>
+          </Link>
+          <Link to="/my-dashboard" className="link">
+            <div style={{color: "white"}}>MY DASHBOARD</div>
+          </Link> */}
+        </div>
       </div>
     </>
   )

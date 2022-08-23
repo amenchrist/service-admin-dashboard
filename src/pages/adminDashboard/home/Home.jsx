@@ -1,10 +1,11 @@
-import Chart from "../../components/chart/Chart";
-import FeaturedInfo from "../../components/featuredInfo/FeaturedInfo";
+import Chart from "../../../components/chart/Chart";
+import FeaturedInfo from "../../../components/featuredInfo/FeaturedInfo";
 import "./home.css";
-import WidgetLg from "../../components/widgetLg/WidgetLg";
-import { useStateContext } from '../../contexts/ContextProvider';
+import WidgetLg from "../../../components/widgetLg/WidgetLg";
+import { useStateContext } from '../../../contexts/ContextProvider';
 import { useState } from "react";
 import { useEffect } from "react";
+
 
 export default function Home() {
 

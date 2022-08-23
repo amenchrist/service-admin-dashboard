@@ -1,9 +1,9 @@
-import Chart from "../../components/chart/Chart";
-import FeaturedInfo from "../../components/featuredInfo/FeaturedInfo";
-import { userData } from "../../dummyData";
-import WidgetSm from "../../components/widgetSm/WidgetSm";
-import WidgetLg from "../../components/widgetLg/WidgetLg";
-import { useStateContext } from '../../contexts/ContextProvider';
+import Chart from "../../../components/chart/Chart";
+import FeaturedInfo from "../../../components/featuredInfo/FeaturedInfo";
+import { userData } from "../../../dummyData";
+import WidgetSm from "../../../components/widgetSm/WidgetSm";
+import WidgetLg from "../../../components/widgetLg/WidgetLg";
+import { useStateContext } from '../../../contexts/ContextProvider';
 import { useState } from "react";
 import { useEffect } from "react";
 import FirstTimersList from "../first-timers/FirstTimersList";

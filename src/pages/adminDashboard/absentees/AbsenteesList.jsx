@@ -1,49 +1,38 @@
-import "./firstTimersList.css";
+import "./absenteesList.css";
 // import { DataGrid } from "@material-ui/data-grid";
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { DeleteOutline } from "@material-ui/icons";
-import { userRows } from "../../dummyData";
 import { Link } from "react-router-dom";
-import { useStateContext } from '../../contexts/ContextProvider';
 import { useState, useEffect } from "react";
+import { useStateContext } from '../../../contexts/ContextProvider';
 
-export default function FirstTimersList() {
+export default function AbsenteesList() {
 
-  const { firstTimers } = useStateContext();
+  const { absentees } = useStateContext();
   const [data, setData] = useState([]);
 
   useEffect(()=>{
     const newData = []
-    firstTimers.forEach((m,i) => {
-      const d = new Date(m.attendanceRecords[0].time*1000);
+    absentees.forEach((m,i) => {
       if(m.id === undefined){
         m.id = `No ID assigned ${i}`
       }
         m = {
         id: m.id,
         title: m.title,
-        attendees: m.attendanceRecords[0].attendees,
-        date: m.attendanceRecords[0].date,
-        username: `${m.firstName}`,
+        username: `${m.firstName} ${m.lastName}`,
         email: m.email,
         church: m.church,
-        time: `${d.getHours()}:${d.getMinutes()<10? `0${d.getMinutes()}`: d.getMinutes()}`
       }
 
       newData.push(m)
     })
 
     setData(newData);
-  }, [firstTimers])
-
+  }, [absentees])
 
     const columns = [
         { field: "id", headerName: "ID", width: 90, hide: true },
-        {
-          field: "time",
-          headerName: "Time",
-          width: 110,
-        },
         { field: "title", headerName: "Title", width: 110  },
         {
           field: "user",
@@ -58,8 +47,7 @@ export default function FirstTimersList() {
             );
           },
         },
-        { field: "email", headerName: "Email", width: 230 },
-        { field: "phone", headerName: "Phone Number", width: 180 },
+        { field: "email", headerName: "Email", width: 200 },
         { field: "church", headerName: "Church", width: 120,  },
         {
           field: "action",
@@ -79,12 +67,12 @@ export default function FirstTimersList() {
     
       return (
         <div className="userList">
-          <h3 style={{marginBottom:"20px", paddingLeft: "10px"}}>First Timers ({data.length})</h3>
+          <h3 style={{marginBottom:"20px", paddingLeft: "10px"}}>Absentees ({data.length})</h3>
           <DataGrid
             rows={data}
             disableSelectionOnClick
             columns={columns}
-            pageSize={10}
+            pageSize={20}
             checkboxSelection
             components={{ Toolbar: GridToolbar }}
             componentsProps={{
