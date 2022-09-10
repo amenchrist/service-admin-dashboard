@@ -49,6 +49,7 @@ function AdminDashboard() {
       <div className="container">
           <Sidebar />
           {page()}
+          
       </div>
     </>
     // <Router>
